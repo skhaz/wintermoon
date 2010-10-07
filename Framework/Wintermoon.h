@@ -1,0 +1,102 @@
+
+/*
+ *                        __                                                    
+ *             __        /\ \__                                                 
+ *  __  __  __/\_\    ___\ \ ,_\    __  _ __   ___ ___     ___    ___    ___    
+ * /\ \/\ \/\ \/\ \ /' _ `\ \ \/  /'__`\\`'__\' __` __`\  / __`\ / __`\/' _ `\  
+ * \ \ \_/ \_/ \ \ \/\ \/\ \ \ \_/\  __/ \ \//\ \/\ \/\ \/\ \L\ \\ \L\ \\ \/\ \ 
+ *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
+ *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
+ *
+ * Copyright (c) 2006 - 2009, Rodrigo D. Batista (a.k.a. skhaz)
+ *
+ * Visit: http://www.wintermoonframework.org/
+ *
+ * License: (BSD)
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ * 3. Neither the name of Wintermoon nor the names of its contributors may
+ *    be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+ * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#ifndef _Wintermoon_h
+#define _Wintermoon_h
+
+
+
+#define WINTERMOON_VERSION_MAJOR 1
+#define WINTERMOON_VERSION_MINOR 0
+#define WINTERMOON_VERSION_PATCH 0
+#define WINTERMOON_VERSION_NAME "Astaroth"
+
+#define WINTERMOON_VERSION ((WINTERMOON_VERSION_MAJOR << 16) | (WINTERMOON_VERSION_MINOR << 8) | WINTERMOON_VERSION_PATCH)
+
+#include "Application.h"
+#include "Assert.h"
+#include "ByteArray.h"
+#include "Color.h"
+#include "ContainerHelper.h"
+#include "Deque.h"
+#include "EntityGroup.h"
+#include "Entity.h"
+#include "Enums.h"
+#include "EventListener.h"
+#include "Exception.h"
+#include "Logger.h"
+#include "File.h"
+#include "FileSystem.h"
+#include "FrameListener.h"
+#include "Graphics.h"
+#include "Image.h"
+#include "InputManager.h"
+#include "Internal.h"
+#include "IODevice.h"
+#include "Key.h"
+#include "KeySequence.h"
+#include "List.h"
+#include "MouseEvent.h"
+#include "Mouse.h"
+#include "Mutex.h"
+#include "Observable.h"
+#include "Observer.h"
+#include "PixmapCache.h"
+#include "Pixmap.h"
+#include "Point.h"
+#include "Rect.h"
+#include "Renderable.h"
+#include "Root.h"
+#include "SafeDelete.h"
+#include "SceneManager.h"
+#include "ScopedMutex.h"
+#include "StringTable.h"
+#include "ScriptEngine.h"
+#include "Size.h"
+#include "Thread.h"
+#include "Timer.h"
+#include "TimeSpan.h"
+#include "Types.h"
+#include "Vector.h"
+#include "Widget.h"
+
+#endif
+
