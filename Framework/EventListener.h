@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -60,11 +60,17 @@ class DLL_EXPORT EventListener
 
 		virtual ~EventListener();
 
-		virtual bool keyPressEvent(KeyEvent* event);
+		virtual void keyPressEvent(KeyEvent* event);
 
-		virtual bool keyReleaseEvent(KeyEvent* event);
+		virtual void keyReleaseEvent(KeyEvent* event);
 
-		virtual bool quitEvent();
+		virtual void mouseMoveEvent(MouseEvent* event);
+
+		virtual void mouseReleaseEvent(MouseEvent* event);
+
+		virtual void mousePressEvent(MouseEvent* event);
+
+		virtual void quitEvent();
 };
 
 WINTERMOON_END_NAMESPACE

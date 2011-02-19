@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -39,8 +39,8 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _List_h
-#define _List_h
+#ifndef _Vector_h
+#define _Vector_h
 
 #include <vector>
 #include <algorithm>

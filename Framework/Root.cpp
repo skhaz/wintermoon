@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -41,37 +41,74 @@
 
 #include "Root.h"
 
-#include "Graphics.h"
+#include "VideoManager.h"
+#include "AudioManager.h"
 #include "InputManager.h"
+#include "ResourceManager.h"
+#include "SceneManager.h"
 
 
 
 WINTERMOON_BEGIN_NAMESPACE
 
 Root::Root()
-: m_graphics(new Graphics())
+: m_running(true)
+, m_video(new VideoManager())
+, m_audio(new AudioManager())
 , m_input(new InputManager())
+, m_resource(new ResourceManager())
+, m_scene(new SceneManager())
 {
 }
 
 Root::~Root()
 {
+	delete m_video;
+	delete m_audio;
+	delete m_input;
+	delete m_resource;
+	delete m_scene;
 }
 
 Root* Root::instance()
 {
 	static Root root;
-	return & root;
+	return &root;
 }
 
-Graphics* Root::graphicsManager() const
+bool Root::running() const
 {
-	return m_graphics;
+	return m_running;
+}
+
+void Root::shutdown()
+{
+	m_running = false;
+}
+
+VideoManager* Root::videoManager() const
+{
+	return m_video;
+}
+
+AudioManager* Root::audioManager() const
+{
+	return m_audio;
 }
 
 InputManager* Root::inputManager() const
 {
 	return m_input;
+}
+
+ResourceManager* Root::resourceManager() const
+{
+	return m_resource;
+}
+
+SceneManager* Root::sceneManager() const
+{
+	return m_scene;
 }
 
 WINTERMOON_END_NAMESPACE

@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@ class DLL_EXPORT Pixmap
 
 		static PixmapRef get(const String& filename);
 
-		uint handle() const;
+		void bind();
 
 		uint width() const;
 
@@ -70,6 +70,8 @@ class DLL_EXPORT Pixmap
 		uint m_id;
 		uint m_width;
 		uint m_height;
+
+		static uint m_last_bind;
 };
 
 WINTERMOON_END_NAMESPACE

@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -44,101 +44,19 @@
 
 #include "Internal.h"
 
-#include <boost/utility.hpp>
-#include <boost/signal.hpp>
-#include <boost/function.hpp>
-#include <boost/bind.hpp>
-#include <boost/visit_each.hpp>
-
-#include <list>
 
 
+WINTERMOON_BEGIN_NAMESPACE
 
-namespace Wintermoon
+class DLL_EXPORT Event
 {
-	template <typename Signature>
-	class Event : boost::noncopyable, public boost::signal<Signature>
-	{
-		public:
-			template <typename Slot>
-			boost::signals::connection operator+=(const Slot& slot)
-			{
-				boost::signals::connection c;
+	public:
+		Event();
 
-				if (!alreadyConnected(slot))
-				{
-					c = connect(slot);
-					SlotConnection sc;
-					sc.connection = c;
-					sc.slot = slot;
-					slotList.push_back(sc);
-				}
+		virtual ~Event();
+};
 
-			return c;
-        }
-
-		boost::signals::connection operator+=(const Event& event)
-		{
-			return connect(event);
-        }
-
-		template <typename Slot>
-		void operator-=(const Slot & slot)
-		{
-			typename SlotList::iterator it;
-			for (it = slotList.begin(); it != slotList.end(); it++)
-			{
-				if ((*it).slot == slot)
-					break;
-			}
-
-			if (it != _slotList.end())
-			{
-				(*it).connection.disconnect();
-				slotList.erase(it);
-			}
-		}
-
-	private:
-		template <typename Slot>
-		bool alreadyConnected(const Slot & slot)
-		{
-			for (typename SlotList::iterator it = slotList.begin(); it != slotList.end();)
-			{
-				SlotConnection sc = *it;
-				if (sc.slot == slot)
-				{
-					if (sc.connection.connected())
-					{
-						return true;
-					}
-
-					else {
-						typename SlotList::iterator it2 = it;
-						it = slotList.erase(it2);
-					}
-
-				}
-
-				else {
-					it++;
-				}
-			}
-
-			return false;
-		}
-
-		struct SlotConnection
-		{
-			boost::function<Signature> slot;
-			boost::signals::connection connection;
-		};
-
-		typedef std::list<SlotConnection> SlotList;
-
-		SlotList slotList;
-	};
-}
+WINTERMOON_END_NAMESPACE
 
 #endif
 

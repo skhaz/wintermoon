@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -41,22 +41,20 @@
 
 #include "MouseEvent.h"
 
-#include "Point.h"
-
 
 
 WINTERMOON_BEGIN_NAMESPACE
 
-MouseEvent::MouseEvent(MouseButton button, int x, int y)
-: m_button(button)
+MouseEvent::MouseEvent(int buttons, int x, int y)
+: m_buttons(buttons)
 , m_x(x)
 , m_y(y)
 {
 }
 
-MouseEvent::MouseButton MouseEvent::button() const
+int MouseEvent::buttons() const
 {
-	return m_button;
+	return m_buttons;
 }
 
 int MouseEvent::x() const
@@ -67,6 +65,21 @@ int MouseEvent::x() const
 int MouseEvent::y() const
 {
 	return m_y;
+}
+
+bool MouseEvent::rightButtonPressed() const
+{
+	return m_buttons & Mouse::RightButton;
+}
+
+bool MouseEvent::middleButtonPressed() const
+{
+	return m_buttons & Mouse::MiddleButton;
+}
+
+bool MouseEvent::leftButtonPressed() const
+{
+	return m_buttons & Mouse::LeftButton;
 }
 
 Point MouseEvent::pos() const

@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -44,6 +44,8 @@
 
 #include "Internal.h"
 
+#include "Singleton.h"
+
 
 
 WINTERMOON_BEGIN_NAMESPACE
@@ -53,24 +55,36 @@ class DLL_EXPORT Root
 	public:
 		static Root* instance();
 
-		Graphics* graphicsManager() const;
+		bool running() const;
+
+		void shutdown();
+
+		VideoManager* videoManager() const;
+
+		AudioManager* audioManager() const;
 
 		InputManager* inputManager() const;
 
-		SceneManager* createSceneManager(const String& name);
+		ResourceManager* resourceManager() const;
 
-		void removeSceneManager(const String& name);
-
-		SceneManager* sceneManager(const String& name);
+		SceneManager* sceneManager() const;
 
 	private:
 		Root();
 
 		~Root();
 
-		Graphics* m_graphics;
+		bool m_running;
+
+		VideoManager* m_video;
+
+		AudioManager* m_audio;
 
 		InputManager* m_input;
+
+		ResourceManager* m_resource;
+
+		SceneManager* m_scene;
 };
 
 WINTERMOON_END_NAMESPACE

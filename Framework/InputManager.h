@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -59,6 +59,9 @@ class DLL_EXPORT InputManager
 
 		void removeListener(EventListener* listener);
 
+	protected:
+		int mouseButtons(int mask);
+
 	private:
 		friend class Root;
 
@@ -66,7 +69,6 @@ class DLL_EXPORT InputManager
 
 		~InputManager();
 
-	private:
 		Deque<EventListener *> m_listerners;
 };
 

@@ -8,11 +8,11 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2009, Rodrigo D. Batista (a.k.a. skhaz)
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * Visit: http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
- * License: (BSD)
+ * License: BSD
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -88,30 +88,37 @@
 
 WINTERMOON_BEGIN_NAMESPACE
 	class Application;
-	class StringList;
-	class EventListener;
-	class Mutex;
-	class Size;
-	class Point;
-	class Image;
-	class FrameListener;
-	class Pixmap;
-	class Graphics;
-	class InputManager;
-	class Rectangle;
-	class Key;
-	class KeyEvent;
-	class MouseEvent;
-	class KeySequence;
 	class ByteArray;
 	class Entity;
 	class EntityGroup;
+	class EventListener;
+	class FrameListener;
+	class VideoManager;
+	class AudioManager;
+	class Image;
+	class InputManager;
+	class Key;
+	class KeyEvent;
+	class KeySequence;
+	class MouseEvent;
+	class ResourceManager;
+	class Mutex;
+	class Pixmap;
+	class Point;
+	class Rectangle;
 	class SceneManager;
+	class Size;
+	class SoundEffect;
+	class StringList;
 	class StringTable;
-
-	using std::size_t;
+	class Resource;
+	class Url;
+	class JoyStick;
 
 	typedef boost::shared_ptr<Pixmap> PixmapRef;
+	typedef boost::shared_ptr<Resource> ResourceRef;
+
+	using std::size_t;
 WINTERMOON_END_NAMESPACE
 
 #endif

@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -47,6 +47,8 @@ WINTERMOON_BEGIN_NAMESPACE
 
 InputManager::InputManager()
 {
+	SDL_JoystickOpen(0);
+
 }
 
 InputManager::~InputManager()
@@ -58,8 +60,6 @@ void InputManager::capture()
 	SDL_Event event;
 	Deque<EventListener *>::iterator it = m_listerners.begin();
 	Deque<EventListener *>::const_iterator end = m_listerners.end();
-
-	SDL_JoystickOpen(0);
 
 	while (SDL_PollEvent(&event))
 	{
@@ -81,12 +81,71 @@ void InputManager::capture()
 					listerner->keyReleaseEvent(&key);
 				} break;
 
-				case SDL_MOUSEMOTION:
+				case SDL_MOUSEBUTTONDOWN:
 				{
+					int button = Mouse::NoButton;
+
+					switch (event.button.button)
+					{
+						case SDL_BUTTON_LEFT:
+							button |= Mouse::LeftButton;
+							break;
+						case SDL_BUTTON_MIDDLE:
+							button |= Mouse::MiddleButton;
+							break;
+						case SDL_BUTTON_RIGHT:
+							button |= Mouse::RightButton;
+							break;
+					}
+
+					MouseEvent mouse(button, event.button.x, event.button.y);
+					listerner->mousePressEvent(&mouse);
+				} break;
+
+				case SDL_MOUSEBUTTONUP:
+				{
+					int button = Mouse::NoButton;
+
+					switch (event.button.button)
+					{
+						case SDL_BUTTON_LEFT:
+							button |= Mouse::LeftButton;
+							break;
+						case SDL_BUTTON_MIDDLE:
+							button |= Mouse::MiddleButton;
+							break;
+						case SDL_BUTTON_RIGHT:
+							button |= Mouse::RightButton;
+							break;
+					}
+
+					MouseEvent mouse(button, event.button.x, event.button.y);
+					listerner->mouseReleaseEvent(&mouse);
+				} break;
+
+				case SDL_JOYAXISMOTION:
+				{
+				//	LOG("SDL_JOYAXISMOTION");
+				} break;
+
+				case SDL_JOYBALLMOTION:
+				{
+					LOG("SDL_JOYBALLMOTION");
+				} break;
+
+				case SDL_JOYHATMOTION:
+				{
+					LOG("SDL_JOYHATMOTION");
 				} break;
 
 				case SDL_JOYBUTTONUP:
 				{
+					LOG("SDL_JOYBUTTONUP");
+				} break;
+
+				case SDL_JOYBUTTONDOWN:
+				{
+					LOG("SDL_JOYBUTTONDOWN");
 				} break;
 
 				case SDL_QUIT:

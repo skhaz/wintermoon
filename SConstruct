@@ -2,8 +2,6 @@ import os
 import sys
 import platform
 
-
-
 if sys.platform == 'win32':
 	env = Environment(tools = ['mingw'], ENV = os.environ)
 
@@ -97,18 +95,14 @@ else:
 		env['FRAMEWORKS'] = ['Cocoa', 'OpenGL', 'OpenAL']
 		env.AppendUnique(LIBS = ['SDLmain'])
 	else:
-		env.AppendUnique(LIBS = ['GL'])
+		env.AppendUnique(LIBS = ['GL','openal','luabindd','SDL_ttf'])
 
 	env.AppendUnique(LIBS = ['physfs','lua','SDL_image', 'ogg', 'vorbis', 'vorbisfile'])
 
-env.Decider('MD5-timestamp')
-env.Append(CXXFLAGS = ['-O2'])
+env.Append(CXXFLAGS = ['-O3'])
 env.Append(CXXFLAGS = ['-W'])
 env.Append(CXXFLAGS = ['-Wall'])
 env.Append(CXXFLAGS = ['-Wextra'])
-env.Append(CXXFLAGS = ['-Wuninitialized'])
-env.Append(CXXFLAGS = ['-pedantic'])
-"""env.Append(CXXFLAGS = ['-Werror'])"""
 
 env.Program(target = "Wintermoon", source = Glob('Framework/*.cpp'))
 

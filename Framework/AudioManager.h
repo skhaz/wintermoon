@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -44,6 +44,9 @@
 
 #include "Internal.h"
 
+#include "SoundEffect.h"
+#include "MusicStream.h"
+
 #ifdef __MACOSX__
 # include <OpenAL/al.h>
 # include <OpenAL/alc.h>
@@ -58,10 +61,12 @@
 #include <vorbis/vorbisfile.h>
 
 #ifdef SDL_BIG_ENDIAN
-# define OGG_ENDIAN 1
-#else
 # define OGG_ENDIAN 0
+#else
+# define OGG_ENDIAN 1
 #endif
+
+#define BUFFER_SIZE 32768
 
 
 
@@ -70,11 +75,7 @@ WINTERMOON_BEGIN_NAMESPACE
 class DLL_EXPORT AudioManager
 {
 	public:
-		AudioManager();
-
-		~AudioManager();
-
-		bool load(const String& filename);
+		SoundEffect load(const String& filename);
 
 		void update();
 
@@ -84,6 +85,11 @@ class DLL_EXPORT AudioManager
 		String errorString() const;
 
 	private:
+		friend class Root;
+
+		AudioManager();
+
+		~AudioManager();
 };
 
 WINTERMOON_END_NAMESPACE

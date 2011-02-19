@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -44,33 +44,35 @@
 
 #include "Internal.h"
 
+#include "Mouse.h"
+#include "Point.h"
+#include "Event.h"
+
 
 
 WINTERMOON_BEGIN_NAMESPACE
 
-class DLL_EXPORT MouseEvent
+class DLL_EXPORT MouseEvent : public Event
 {
 	public:
-		enum MouseButton
-		{
-			NoButton     = 0x00000000,
-			RightButton  = 0x00000001,
-			LeftButton   = 0x00000002,
-			MiddleButton = 0x00000004
-		};
-
-		MouseEvent(MouseButton button, int x, int y);
-
-		MouseButton button() const;
+		MouseEvent(int buttons, int x, int y);
 
 		int x() const;
 
 		int y() const;
 
+		int buttons() const;
+
+		bool rightButtonPressed() const;
+
+		bool middleButtonPressed() const;
+
+		bool leftButtonPressed() const;
+
 		Point pos() const;
 
 	private:
-		MouseButton m_button;
+		int m_buttons;
 		int m_x;
 		int m_y;
 };

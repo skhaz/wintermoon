@@ -8,11 +8,11 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2009, Rodrigo D. Batista (a.k.a. skhaz)
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * Visit: http://www.wintermoonframework.org/
+ * Visit: http://wintermoon.sourceforge.net/
  *
- * License: (BSD)
+ * License: BSD
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -66,7 +66,7 @@
 #include "File.h"
 #include "FileSystem.h"
 #include "FrameListener.h"
-#include "Graphics.h"
+#include "VideoManager.h"
 #include "Image.h"
 #include "InputManager.h"
 #include "Internal.h"

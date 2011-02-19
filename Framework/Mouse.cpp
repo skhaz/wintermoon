@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -46,10 +46,10 @@
 WINTERMOON_BEGIN_NAMESPACE
 
 Mouse::Mouse()
-: _x(0)
-, _y(0)
-, _relX(0)
-, _relY(0)
+: m_x(0)
+, m_y(0)
+, m_relX(0)
+, m_relY(0)
 {
 }
 
@@ -59,22 +59,22 @@ Mouse::~Mouse()
 
 int Mouse::x() const throw()
 {
-	return _x;
+	return m_x;
 }
 
 int Mouse::y() const throw()
 {
-	return _y;
+	return m_y;
 }
 
 int Mouse::relX() const throw()
 {
-	return _relX;
+	return m_relX;
 }
 
 int Mouse::relY() const throw()
 {
-	return _relY;
+	return m_relY;
 }
 
 void Mouse::warp(Uint16 x, Uint16 y)

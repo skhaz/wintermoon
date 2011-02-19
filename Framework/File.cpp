@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -45,11 +45,11 @@
 
 WINTERMOON_BEGIN_NAMESPACE
 
-static long physfsrwops_seek(SDL_RWops *rw, long offset, int whence)
+static int physfsrwops_seek(SDL_RWops *rw, int offset, int whence)
 {
 	PHYSFS_File *handle = (PHYSFS_File *) rw->hidden.unknown.data1;
 
-	long pos = 0;
+	int pos = 0;
 
 	if (whence == SEEK_SET)
 	{
@@ -66,7 +66,7 @@ static long physfsrwops_seek(SDL_RWops *rw, long offset, int whence)
 			return(-1);
 		}
 
-		pos = (long) current;
+		pos = (int)current;
 
 		if (((PHYSFS_sint64)pos) != current)
 		{
@@ -90,7 +90,7 @@ static long physfsrwops_seek(SDL_RWops *rw, long offset, int whence)
 			return(-1);
 		}
 
-		pos = (long) len;
+		pos = (int)len;
 
 		if (((PHYSFS_sint64)pos) != len)
 		{
@@ -122,10 +122,10 @@ static long physfsrwops_seek(SDL_RWops *rw, long offset, int whence)
 	return(pos);
 }
 
-static size_t physfsrwops_read(SDL_RWops *rw, void *ptr, size_t size, size_t maxnum)
+static int physfsrwops_read(SDL_RWops *rw, void *ptr, int size, int maxnum)
 {
 	PHYSFS_File *handle = (PHYSFS_File *) rw->hidden.unknown.data1;
-	PHYSFS_uint64 rc = PHYSFS_read(handle, ptr, size, maxnum);
+	PHYSFS_uint32 rc = PHYSFS_read(handle, ptr, size, maxnum);
 
 	if (rc != maxnum)
 	{
@@ -133,23 +133,23 @@ static size_t physfsrwops_read(SDL_RWops *rw, void *ptr, size_t size, size_t max
 			SDL_SetError("PhysicsFS error: %s", PHYSFS_getLastError());
 	}
 	
-	return((size_t) rc);
+	return((int) rc);
 }
 
-static size_t physfsrwops_write(SDL_RWops *rw, const void *ptr, size_t size, size_t num)
+static int physfsrwops_write(SDL_RWops *rw, const void *ptr, int size, int num)
 {
 	PHYSFS_File *handle = (PHYSFS_File *) rw->hidden.unknown.data1;
-	PHYSFS_uint64 rc = PHYSFS_write(handle, ptr, size, num);
+	PHYSFS_uint32 rc = PHYSFS_write(handle, ptr, size, num);
 
 	if (rc != num)
 		SDL_SetError("PhysicsFS error: %s", PHYSFS_getLastError());
 
-	return((size_t) rc);
+	return((int) rc);
 }
 
 static int physfsrwops_close(SDL_RWops *rw)
 {
-	PHYSFS_File *handle = (PHYSFS_File *) rw->hidden.unknown.data1;
+	PHYSFS_File *handle = (PHYSFS_File*) rw->hidden.unknown.data1;
 
 	if (!PHYSFS_close(handle))
 	{

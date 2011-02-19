@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -81,15 +81,6 @@ int DLL_EXPORT main(int argc, char** argv)
 
 	atexit(SDL_Quit);
 
-	/*
-	if (TTF_Init() < 0)
-	{
-		fprintf(stderr, "[TTF_Init] %s\n", TTF_GetError());
-		exit(-1);
-	}
-
-	atexit(TTF_Quit);
-	*/
 	if (!PHYSFS_init(argv[0]))
 	{
 		fprintf(stderr, "[PHYSFS_init] %s\n", PHYSFS_getLastError());
@@ -98,7 +89,7 @@ int DLL_EXPORT main(int argc, char** argv)
 
 	FileSystem::addArchive(".");
 
-	Deque<String> args;
+	List<String> args;
 
 	for (int i = 0; i < argc; ++i)
 	{

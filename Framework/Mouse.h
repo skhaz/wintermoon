@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -51,6 +51,14 @@ WINTERMOON_BEGIN_NAMESPACE
 class DLL_EXPORT Mouse
 {
 	public:
+		enum Button
+		{
+			NoButton     = 0x00000000,
+			RightButton  = 0x00000001,
+			LeftButton   = 0x00000002,
+			MiddleButton = 0x00000004
+		};
+
 		Mouse();
 
 		virtual ~Mouse();
@@ -72,10 +80,10 @@ class DLL_EXPORT Mouse
 
 		void capture();
 
-		int _x;
-		int _y;
-		int _relX;
-		int _relY;
+		int m_x;
+		int m_y;
+		int m_relX;
+		int m_relY;
 };
 
 WINTERMOON_END_NAMESPACE

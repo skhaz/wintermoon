@@ -9,11 +9,11 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2009, Rodrigo D. Batista (a.k.a. skhaz)
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * Visit: http://www.wintermoonframework.org/
+ * Visit: http://wintermoon.sourceforge.net/
  *
- * License: (BSD)
+ * License: BSD
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -45,6 +45,7 @@
 
 #include "Internal.h"
 
+#include "Event.h"
 #include "Key.h"
 #include "KeyModifier.h"
 
@@ -52,7 +53,7 @@
 
 WINTERMOON_BEGIN_NAMESPACE
 
-class DLL_EXPORT KeyEvent
+class DLL_EXPORT KeyEvent : public Event
 {
 	public:
 		KeyEvent(SDLKey key, Uint16 modifier);

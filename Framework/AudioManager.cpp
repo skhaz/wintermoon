@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -103,6 +103,8 @@ AudioManager::AudioManager()
 	}
 
 	alListenerf(AL_GAIN, 1.0);
+	alListener3f(AL_POSITION, 0.0f, 0.0f, 0.0f);
+
 
 	LOG("OpenAL:");
 	LOG("Vendor     : %s", alGetString(AL_VENDOR));
@@ -121,9 +123,15 @@ AudioManager::~AudioManager()
 	alcCloseDevice(device);
 }
 
-bool AudioManager::load(const String& filename)
+SoundEffect AudioManager::load(const String& filename)
 {
-	OggVorbis_File stream;
+	OggVorbis_File oggfile;
+	char array[BUFFER_SIZE];
+	Vector<char> buffer;
+	int stream;
+	int bytes;
+	ALuint sourceID;
+	ALuint bufferID;
 
 	if (!PHYSFS_exists(filename.c_str()))
 	{
@@ -133,30 +141,44 @@ bool AudioManager::load(const String& filename)
 	PHYSFS_file* handle = PHYSFS_openRead(filename.c_str());
 
 	if (!handle)
-		return false;
+		throw Exception("Failed while opening %s", filename.c_str());
 
-	if (ov_open_callbacks(static_cast<void *>(handle), &stream, NULL, 0, PHYSFS_callbacks) < 0)
+	if (ov_open_callbacks(static_cast<void *>(handle), &oggfile, NULL, 0, PHYSFS_callbacks) < 0)
 	{
 		throw Exception("Could not open Ogg stream");
 	}	
 
-	vorbis_info* info = ov_info(&stream, -1);
+	vorbis_info *info = ov_info(&oggfile, -1);
 
-	//ALenum format = info->channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
-	//ALsizei freq = info->rate;
+	ALenum format = info->channels == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+	ALsizei freq = info->rate;
 
-	//Vector<char> buffer;
-	//char array[32768];
-/*
+	alGenBuffers(1, &bufferID);
+	alGenSources(1, &sourceID);
+
+	//alSource3f(sourceID, AL_POSITION, 0.0f, 0.0f, 0.0f);
+
 	do {
-		bytes = ov_read(&oggFile, array, 32768, OGG_ENDIAN, 2, 1, &bitStream);
+		bytes = ov_read(&oggfile, array, BUFFER_SIZE, OGG_ENDIAN, 2, 1, &stream);
+
+		if (bytes < 0)
+		{
+			ov_clear(&oggfile);
+			PHYSFS_close(handle);
+
+			throw Exception("Error decoding ogg file %s", filename.c_str());
+		}
+
 		buffer.insert(buffer.end(), array, array + bytes);
 	} while (bytes > 0);
-*/
-	ov_clear(&stream);
+
+	ov_clear(&oggfile);
 	PHYSFS_close(handle);
 
-	return true;
+	alBufferData(bufferID, format, &buffer[0], static_cast<ALsizei>(buffer.size()), freq);
+	alSourcei(sourceID, AL_BUFFER, bufferID);
+
+	return SoundEffect(sourceID);
 }
 
 bool AudioManager::checkError()
@@ -183,6 +205,8 @@ bool AudioManager::checkError()
 
 	}
 	*/
+
+	return false;
 }
 
 WINTERMOON_END_NAMESPACE

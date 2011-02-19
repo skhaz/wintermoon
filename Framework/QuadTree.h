@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -51,27 +51,36 @@
 
 WINTERMOON_BEGIN_NAMESPACE
 
-template <typename DataType>
+template <typename DataType, class Allocator = std::allocator<DataType> >
 class DLL_EXPORT QuadTree : public Rect
 {
 	private:
-		QuadTree<DataType> * m_nw;
-		QuadTree<DataType> * m_ne;
-		QuadTree<DataType> * m_se;
-		QuadTree<DataType> * m_sw;
-
-		QuadTree<DataType> * m_parent;
-
 		Deque<DataType> m_data;
 
+		QuadTree<DataType> *parent;
+
+		QuadTree<DataType> *nw;
+		QuadTree<DataType> *ne;
+		QuadTree<DataType> *se;
+		QuadTree<DataType> *sw;
+
+	protected:
+		bool canSubDivide() const
+		{
+		}
+
+		void createChild()
+		{
+		}
+
 	public:
-		explicit QuadTree(const Rect& rect, QuadTree<DataType> *parent = 0)
+		explicit QuadTree(const Rect& rect, QuadTree<DataType> *p = 0)
 		: Rect(rect)
-		, m_nw(0)
-		, m_ne(0)
-		, m_se(0)
-		, m_sw(0)
-		, m_parent(0)
+		, nw(0)
+		, ne(0)
+		, se(0)
+		, sw(0)
+		, parent(p)
 		{
 		}
 
@@ -87,10 +96,10 @@ class DLL_EXPORT QuadTree : public Rect
 				glVertex2i(x,y+h);
 			glEnd();
 
-			if (m_nw) m_nw->draw();
-			if (m_ne) n_ne->draw();
-			if (m_se) n_se->draw();
-			if (m_sw) n_sw->draw();
+			if (nw) nw->draw();
+			if (ne) ne->draw();
+			if (se) se->draw();
+			if (sw) sw->draw();
 			#endif
 		}
 };

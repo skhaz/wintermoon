@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -46,37 +46,18 @@
 WINTERMOON_BEGIN_NAMESPACE
 
 SoundEffect::SoundEffect(ALuint id)
+: m_source(id)
 {
-	alGetError();
-
-	alGenSources(1, &m_source);
-
-	ALenum error = alGetError();
-
-	if (error != AL_NO_ERROR)
-	{
-		switch (error)
-		{
-			case AL_OUT_OF_MEMORY:
-				throw Exception("[alGenSources] Out of memory");
-
-			case AL_INVALID_VALUE:
-				throw Exception("[alGenSources] not enough non-memory resources, or invalid pointer");
-
-			case AL_INVALID_OPERATION:
-				throw Exception("[alGenSources] no context available to create sources in");
-
-			default:
-				throw Exception("[alGenSources] unhandled error code");
-		}
-	}
-
-	alSourcei(m_source, AL_BUFFER, id);
 }
 
 SoundEffect::~SoundEffect()
 {
 	alDeleteSources(1, &m_source);
+}
+
+void SoundEffect::play()
+{
+	alSourcePlay(m_source);
 }
 
 WINTERMOON_END_NAMESPACE

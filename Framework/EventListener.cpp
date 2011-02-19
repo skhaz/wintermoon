@@ -8,9 +8,9 @@
  *  \ \___x___/'\ \_\ \_\ \_\ \__\ \____\ \_\\ \_\ \_\ \_\ \____/ \____/ \_\ \_\
  *   \/__//__/   \/_/\/_/\/_/\/__/\/____/\/_/ \/_/\/_/\/_/\/___/ \/___/ \/_/\/_/
  *
- * Copyright (c) 2006 - 2010 Wintermoon Project
+ * Copyright (c) 2006 - 2011 Wintermoon Project
  *
- * http://www.wintermoonframework.org/
+ * http://wintermoon.sourceforge.net/
  *
  * License: BSD
  * Redistribution and use in source and binary forms, with or without
@@ -59,23 +59,33 @@ EventListener::~EventListener()
 	input->removeListener(this);
 }
 
-bool EventListener::keyPressEvent(KeyEvent* event)
+void EventListener::keyPressEvent(KeyEvent* event)
 {
 	UNUSED(event);
-
-	return false;
 }
 
-bool EventListener::keyReleaseEvent(KeyEvent* event)
+void EventListener::keyReleaseEvent(KeyEvent* event)
 {
 	UNUSED(event);
-
-	return false;
 }
 
-bool EventListener::quitEvent()
+void EventListener::mouseMoveEvent(MouseEvent* event)
 {
-	return false;
+	UNUSED(event);
+}
+
+void EventListener::mouseReleaseEvent(MouseEvent* event)
+{
+	UNUSED(event);
+}
+
+void EventListener::mousePressEvent(MouseEvent* event)
+{
+	UNUSED(event);
+}
+
+void EventListener::quitEvent()
+{
 }
 
 WINTERMOON_END_NAMESPACE
