@@ -44,8 +44,6 @@
 
 #include "Internal.h"
 
-#include "Deque.h"
-
 
 
 WINTERMOON_BEGIN_NAMESPACE
