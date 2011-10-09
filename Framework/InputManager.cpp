@@ -81,51 +81,27 @@ void InputManager::capture()
 					listerner->keyReleaseEvent(&key);
 				} break;
 
+				case SDL_MOUSEMOTION:
+				{
+					MouseEvent mouse(Mouse::NoButton, event.button.x, event.button.y);
+					listerner->mouseMoveEvent(&mouse);
+				} break;
+
 				case SDL_MOUSEBUTTONDOWN:
 				{
-					int button = Mouse::NoButton;
-
-					switch (event.button.button)
-					{
-						case SDL_BUTTON_LEFT:
-							button |= Mouse::LeftButton;
-							break;
-						case SDL_BUTTON_MIDDLE:
-							button |= Mouse::MiddleButton;
-							break;
-						case SDL_BUTTON_RIGHT:
-							button |= Mouse::RightButton;
-							break;
-					}
-
-					MouseEvent mouse(button, event.button.x, event.button.y);
+					MouseEvent mouse(convertMouseButton(event.button.button), event.button.x, event.button.y);
 					listerner->mousePressEvent(&mouse);
 				} break;
 
 				case SDL_MOUSEBUTTONUP:
 				{
-					int button = Mouse::NoButton;
-
-					switch (event.button.button)
-					{
-						case SDL_BUTTON_LEFT:
-							button |= Mouse::LeftButton;
-							break;
-						case SDL_BUTTON_MIDDLE:
-							button |= Mouse::MiddleButton;
-							break;
-						case SDL_BUTTON_RIGHT:
-							button |= Mouse::RightButton;
-							break;
-					}
-
-					MouseEvent mouse(button, event.button.x, event.button.y);
+					MouseEvent mouse(convertMouseButton(event.button.button), event.button.x, event.button.y);
 					listerner->mouseReleaseEvent(&mouse);
 				} break;
 
 				case SDL_JOYAXISMOTION:
 				{
-				//	LOG("SDL_JOYAXISMOTION");
+					// LOG("SDL_JOYAXISMOTION");
 				} break;
 
 				case SDL_JOYBALLMOTION:
@@ -192,6 +168,24 @@ void InputManager::removeListener(EventListener* listerner)
 			// does't exist
 		}
 	}
+}
+
+int InputManager::convertMouseButton(int button)
+{
+	switch (button)
+	{
+		case SDL_BUTTON_LEFT:
+			return Mouse::LeftButton;
+			break;
+		case SDL_BUTTON_MIDDLE:
+			return Mouse::MiddleButton;
+			break;
+		case SDL_BUTTON_RIGHT:
+			return Mouse::RightButton;
+			break;
+	}
+
+	return Mouse::NoButton;
 }
 
 WINTERMOON_END_NAMESPACE

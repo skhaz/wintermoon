@@ -82,6 +82,7 @@
 #include "PixmapCache.h"
 #include "Pixmap.h"
 #include "Point.h"
+#include "QuadTree.h"
 #include "Rect.h"
 #include "Renderable.h"
 #include "Root.h"

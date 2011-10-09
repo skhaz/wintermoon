@@ -55,7 +55,7 @@ Image::Image(int width, int height, bool alpha)
 	#if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	surface = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 32, 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
 	#else
-	surface = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 32, 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
+	surface = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 32, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
 	#endif
 
 	if (!surface)

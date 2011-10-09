@@ -60,7 +60,7 @@ class DLL_EXPORT InputManager
 		void removeListener(EventListener* listener);
 
 	protected:
-		int mouseButtons(int mask);
+		int convertMouseButton(int mask);
 
 	private:
 		friend class Root;

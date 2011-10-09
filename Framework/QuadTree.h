@@ -84,11 +84,11 @@ class DLL_EXPORT QuadTree : public Rect
 		{
 		}
 
-		~QuadTree();
+		~QuadTree() { }
 
 		void draw()
 		{
-			#ifdef DEBUG
+			#ifndef DEBUG
 			glBegin(GL_LINE_LOOP);
 				glVertex2i(x,y);
 				glVertex2i(x+w,y);

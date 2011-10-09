@@ -55,24 +55,18 @@ WINTERMOON_BEGIN_NAMESPACE
 class DLL_EXPORT MouseEvent : public Event
 {
 	public:
-		MouseEvent(int buttons, int x, int y);
+		MouseEvent(int button, int x, int y);
 
 		int x() const;
 
 		int y() const;
 
-		int buttons() const;
-
-		bool rightButtonPressed() const;
-
-		bool middleButtonPressed() const;
-
-		bool leftButtonPressed() const;
+		int button() const;
 
 		Point pos() const;
 
 	private:
-		int m_buttons;
+		int m_button;
 		int m_x;
 		int m_y;
 };

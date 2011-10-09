@@ -45,16 +45,16 @@
 
 WINTERMOON_BEGIN_NAMESPACE
 
-MouseEvent::MouseEvent(int buttons, int x, int y)
-: m_buttons(buttons)
+MouseEvent::MouseEvent(int button, int x, int y)
+: m_button(button)
 , m_x(x)
 , m_y(y)
 {
 }
 
-int MouseEvent::buttons() const
+int MouseEvent::button() const
 {
-	return m_buttons;
+	return m_button;
 }
 
 int MouseEvent::x() const
@@ -65,21 +65,6 @@ int MouseEvent::x() const
 int MouseEvent::y() const
 {
 	return m_y;
-}
-
-bool MouseEvent::rightButtonPressed() const
-{
-	return m_buttons & Mouse::RightButton;
-}
-
-bool MouseEvent::middleButtonPressed() const
-{
-	return m_buttons & Mouse::MiddleButton;
-}
-
-bool MouseEvent::leftButtonPressed() const
-{
-	return m_buttons & Mouse::LeftButton;
 }
 
 Point MouseEvent::pos() const
