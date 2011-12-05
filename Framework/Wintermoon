@@ -96,6 +96,7 @@
 #include "Timer.h"
 #include "TimeSpan.h"
 #include "Types.h"
+#include "Url.h"
 #include "Vector.h"
 #include "Widget.h"
 
