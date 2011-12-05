@@ -1,4 +1,3 @@
-
 import os
 import sys
 import platform
@@ -23,5 +22,5 @@ env.Append(CPPPATH = ['.'])
 
 
 
-env.Program(target = "Wintermoon", source = Glob('Framework/*.cpp') + Glob("Game/*.cpp"))
+env.Program(target = "Wintermoon", source = Glob('Framework/*.cpp'))
 
