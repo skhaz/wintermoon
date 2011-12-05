@@ -39,45 +39,90 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _ScriptEngine_h
-#define _ScriptEngine_h
+#include "ScriptEngine.h"
 
-#include "Internal.h"
+#include <luabind/luabind.hpp>
+#include <sstream>
 
-extern "C"
-{
-  #include "lua.h"
-  #include "lualib.h"
-  #include "lauxlib.h"
-}
-
-struct lua_State;
+#include "FileSystem.h"
+#include "File.h"
+#include "VideoManager.h"
 
 
 
 WINTERMOON_BEGIN_NAMESPACE
 
-class DLL_EXPORT ScriptEngine
+ScriptEngine::ScriptEngine()
+: L(lua_open())
 {
-	public:
-		ScriptEngine();
+	using namespace luabind;
 
-		virtual ~ScriptEngine();
+	luaL_openlibs(L);
 
-		void evaluate(const String& program);
+	luabind::open(L);
 
-		void collectGarbage();
+	module(L)
+	[
+		class_<FileSystem>("FileSystem")
+		.def(constructor<>())
+		.scope
+		[
+			def("addArchive", FileSystem::addArchive),
+			def("removeArchive", FileSystem::removeArchive)
+		]
+	];
 
-		int usedMemory();
+	module(L)
+	[
+		class_<IODevice>("IODevice")
+		.enum_("OpenMode")
+		[
+			value("ReadOnly", 2),
+			value("ReadWrite", 4),
+			value("Append", 8),
+			value("Text", 16)
+		],
 
-	protected:
-		// void bindFileSystem();
+		class_<File, IODevice>("File")
+		.def(constructor<const String &>())
+		.def("open", &File::open)
+		.def("length", &File::length)
+		.def("eof", &File::eof)
+		.def("seek", &File::seek)
+		.def("tell", &File::tell)
+	];
+}
 
-	private:
-		lua_State* L;
-};
+ScriptEngine::~ScriptEngine()
+{
+	lua_close(L);
+}
+
+void ScriptEngine::evaluate(const std::string& program)
+{
+	const char* buffer = program.c_str();
+	luaL_loadbuffer(L, buffer, std::strlen(buffer), buffer);
+	luabind::object script(luabind::from_stack(L, -1));
+
+	try
+	{
+		luabind::call_function<void>(script);
+	}
+
+	catch (luabind::error&) { /* TODO print lua stacktrace */ }
+
+	lua_pop(L, 1);
+}
+
+void ScriptEngine::collectGarbage()
+{
+	lua_gc(L, LUA_GCCOLLECT, 0);
+}
+
+int ScriptEngine::usedMemory()
+{
+	return lua_gc(L, LUA_GCCOUNT, 0);
+}
 
 WINTERMOON_END_NAMESPACE
-
-#endif
 
