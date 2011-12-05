@@ -47,6 +47,7 @@
 #include "FileSystem.h"
 #include "File.h"
 #include "VideoManager.h"
+#include "Root.h"
 
 
 
@@ -64,33 +65,67 @@ ScriptEngine::ScriptEngine()
 	module(L)
 	[
 		class_<FileSystem>("FileSystem")
-		.def(constructor<>())
-		.scope
-		[
-			def("addArchive", FileSystem::addArchive),
-			def("removeArchive", FileSystem::removeArchive)
-		]
+			.def(constructor<>())
+			.scope
+			[
+				def("addArchive", FileSystem::addArchive),
+				def("removeArchive", FileSystem::removeArchive)
+			]
 	];
 
 	module(L)
 	[
 		class_<IODevice>("IODevice")
-		.enum_("OpenMode")
-		[
-			value("ReadOnly", 2),
-			value("ReadWrite", 4),
-			value("Append", 8),
-			value("Text", 16)
-		],
+			.enum_("OpenMode")
+			[
+				value("ReadOnly", 2),
+				value("ReadWrite", 4),
+				value("Append", 8),
+				value("Text", 16)
+			],
 
-		class_<File, IODevice>("File")
-		.def(constructor<const String &>())
-		.def("open", &File::open)
-		.def("length", &File::length)
-		.def("eof", &File::eof)
-		.def("seek", &File::seek)
-		.def("tell", &File::tell)
+			class_<File, IODevice>("File")
+			.def(constructor<const String &>())
+			.def("open", &File::open)
+			.def("length", &File::length)
+			.def("eof", &File::eof)
+			.def("seek", &File::seek)
+			.def("tell", &File::tell)
 	];
+
+	module(L)
+	[
+		class_<Root>("Root")
+			.scope
+			[
+				def("instance", Root::instance)
+			]
+
+			.def("running", &Root::running)
+			.def("shutdown", &Root::shutdown)
+			.def("videoManager", &Root::videoManager)
+			.def("audioManager", &Root::audioManager)
+			.def("inputManager", &Root::inputManager)
+			.def("resourceManager", &Root::resourceManager)
+			.def("sceneManager", &Root::sceneManager)
+	];
+
+	module(L)
+	[
+		class_<VideoManager>("VideoManager")
+			.def("init", &VideoManager::init)
+			.def("beginDraw", &VideoManager::beginDraw)
+			.def("endDraw", &VideoManager::endDraw)
+	];
+
+	module(L)
+	[
+		class_<Rect>("Rect")
+			.def(constructor<>())
+			.def(constructor<>(Sint16, Sint16, Uint16, Uint16))
+			.def("collide", &Rect::collide)
+			.def("distance", &Rect::distance)
+	]
 }
 
 ScriptEngine::~ScriptEngine()
