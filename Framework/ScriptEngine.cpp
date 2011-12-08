@@ -43,15 +43,52 @@
 
 #include <luabind/luabind.hpp>
 #include <sstream>
+#include <iostream>
 
 #include "FileSystem.h"
 #include "File.h"
-#include "VideoManager.h"
+#include "Size.h"
+#include "Rect.h"
 #include "Root.h"
+#include "VideoManager.h"
+#include "AudioManager.h"
+#include "InputManager.h"
+#include "ResourceManager.h"
+#include "SceneManager.h"
+#include "EventListener.h"
+#include "KeyEvent.h"
 
 
 
 WINTERMOON_BEGIN_NAMESPACE
+
+class EventListenerWrapper : public EventListener, public luabind::wrap_base
+{
+	public:
+		EventListenerWrapper()
+		{
+		}
+
+		virtual void keyPressEvent(KeyEvent* event)
+		{
+			call<void>("keyPressEvent", event);
+		}
+
+		static void defaultKeyPressEvent(EventListener* ptr, KeyEvent* event)
+		{
+			return ptr->EventListener::keyPressEvent(event);
+		}
+
+		virtual void keyReleaseEvent(KeyEvent* event)
+		{
+			call<void>("keyReleaseEvent", event);
+		}
+
+		static void defaultKeyReleaseEvent(EventListener* ptr, KeyEvent* event)
+		{
+			return ptr->EventListener::keyReleaseEvent(event);
+		}
+};
 
 ScriptEngine::ScriptEngine()
 : L(lua_open())
@@ -125,26 +162,66 @@ ScriptEngine::ScriptEngine()
 			.def(constructor<>(Sint16, Sint16, Uint16, Uint16))
 			.def("collide", &Rect::collide)
 			.def("distance", &Rect::distance)
-	]
+	];
+
+	module(L)
+	[
+		class_<Key>("Key")
+			.def(constructor<>())
+			.def(constructor<SDLKey>())
+			.def(constructor<const String &>())
+			.def(constructor<const Key &>())
+			.def("name", &Key::name)
+			.def("empty", &Key::empty)
+	];
+
+	module(L)
+	[
+		class_<KeyEvent>("KeyEvent")
+			.def(constructor<>())
+			.def("key", &KeyEvent::key)
+	];
+
+	module(L)
+	[
+		class_<InputManager>("InputManager")
+			.def("capture", &InputManager::capture)
+			.def("addListener", &InputManager::addListener)
+			.def("removeListener", &InputManager::removeListener)
+	];
+
+	module(L)
+	[
+		class_<EventListener, EventListenerWrapper>("EventListener")
+			.def(constructor<>())
+			.def("keyPressEvent", &EventListener::keyPressEvent, &EventListenerWrapper::defaultKeyPressEvent)
+			.def("keyReleaseEvent", &EventListener::keyReleaseEvent, &EventListenerWrapper::defaultKeyReleaseEvent)
+	];
 }
 
 ScriptEngine::~ScriptEngine()
 {
-	lua_close(L);
+	// lua_close(L); XXX
 }
 
 void ScriptEngine::evaluate(const std::string& program)
 {
 	const char* buffer = program.c_str();
+
 	luaL_loadbuffer(L, buffer, std::strlen(buffer), buffer);
 	luabind::object script(luabind::from_stack(L, -1));
 
-	try
-	{
+	try {
 		luabind::call_function<void>(script);
 	}
 
-	catch (luabind::error&) { /* TODO print lua stacktrace */ }
+	catch (luabind::error& e)
+	{
+		luabind::object what(luabind::from_stack(e.state(), -1));
+		std::stringstream stream;
+		stream << what;
+		LOG(stream.str().c_str());
+	}
 
 	lua_pop(L, 1);
 }
