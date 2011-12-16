@@ -157,9 +157,17 @@ ScriptEngine::ScriptEngine()
 
 	module(L)
 	[
+		class_<InputManager>("InputManager")
+			.def("capture", &InputManager::capture)
+			.def("addListener", &InputManager::addListener)
+			.def("removeListener", &InputManager::removeListener)
+	];
+
+	module(L)
+	[
 		class_<Rect>("Rect")
 			.def(constructor<>())
-			.def(constructor<>(Sint16, Sint16, Uint16, Uint16))
+			.def(constructor<Sint16, Sint16, Uint16, Uint16>())
 			.def("collide", &Rect::collide)
 			.def("distance", &Rect::distance)
 	];
@@ -184,18 +192,10 @@ ScriptEngine::ScriptEngine()
 
 	module(L)
 	[
-		class_<InputManager>("InputManager")
-			.def("capture", &InputManager::capture)
-			.def("addListener", &InputManager::addListener)
-			.def("removeListener", &InputManager::removeListener)
-	];
-
-	module(L)
-	[
 		class_<EventListener, EventListenerWrapper>("EventListener")
 			.def(constructor<>())
-			.def("keyPressEvent", &EventListener::keyPressEvent, &EventListenerWrapper::defaultKeyPressEvent)
-			.def("keyReleaseEvent", &EventListener::keyReleaseEvent, &EventListenerWrapper::defaultKeyReleaseEvent)
+			.def("keyPressEvent", (void (EventListener::*)(KeyEvent *)) &EventListener::keyPressEvent, &EventListenerWrapper::defaultKeyPressEvent)
+			.def("keyReleaseEvent", (void (EventListener::*)(KeyEvent *)) &EventListener::keyReleaseEvent, &EventListenerWrapper::defaultKeyReleaseEvent)
 	];
 }
 

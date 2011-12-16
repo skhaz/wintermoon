@@ -66,7 +66,7 @@ void InputManager::capture()
 		for (; it != end; ++it)
 		{
 			EventListener* listerner = *it;
-		
+
 			switch (event.type)
 			{
 				case SDL_KEYDOWN:

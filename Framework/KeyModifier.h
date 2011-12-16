@@ -51,7 +51,7 @@ WINTERMOON_BEGIN_NAMESPACE
 class DLL_EXPORT KeyModifier
 {
 	public:
-		KeyModifier(int mod);
+		explicit KeyModifier(int mod = 0);
 
 	private:
 		int m_mod;

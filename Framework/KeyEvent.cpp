@@ -46,6 +46,10 @@
 
 WINTERMOON_BEGIN_NAMESPACE
 
+KeyEvent::KeyEvent()
+{
+}
+
 KeyEvent::KeyEvent(SDLKey key, Uint16 modifier)
 : m_key(key)
 , m_modifier(modifier)

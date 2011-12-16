@@ -67,6 +67,7 @@ class DLL_EXPORT QuadTree : public Rect
 	protected:
 		bool canSubDivide() const
 		{
+			return false;
 		}
 
 		void createChild()

@@ -55,7 +55,7 @@ static int physfsrwops_seek(SDL_RWops *rw, int offset, int whence)
 	{
 		pos = offset;
 	}
-	
+
 	else if (whence == SEEK_CUR)
 	{
 		PHYSFS_sint64 current = PHYSFS_tell(handle);
@@ -118,7 +118,7 @@ static int physfsrwops_seek(SDL_RWops *rw, int offset, int whence)
 		SDL_SetError("PhysicsFS error: %s", PHYSFS_getLastError());
 		return(-1);
 	}
-	
+
 	return(pos);
 }
 
@@ -132,7 +132,7 @@ static int physfsrwops_read(SDL_RWops *rw, void *ptr, int size, int maxnum)
 		if (!PHYSFS_eof(handle))
 			SDL_SetError("PhysicsFS error: %s", PHYSFS_getLastError());
 	}
-	
+
 	return((int) rc);
 }
 
@@ -216,6 +216,7 @@ File::File(String const& filename)
 : m_filename(filename)
 , m_file(0)
 {
+LOG(">>>>> %s", filename.c_str());
 }
 
 File::~File()

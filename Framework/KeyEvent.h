@@ -56,6 +56,8 @@ WINTERMOON_BEGIN_NAMESPACE
 class DLL_EXPORT KeyEvent : public Event
 {
 	public:
+		KeyEvent();
+
 		KeyEvent(SDLKey key, Uint16 modifier);
 
 		virtual ~KeyEvent();

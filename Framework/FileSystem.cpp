@@ -60,7 +60,7 @@ void FileSystem::addArchive(const String& path, const String& mountpoint)
 		// TODO PHYSFS_getLastError
 	}
 }
-	
+
 void FileSystem::removeArchive(const String& path)
 {
 	if (PHYSFS_removeFromSearchPath(path.c_str()) != 0)
