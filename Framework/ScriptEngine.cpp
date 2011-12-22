@@ -88,6 +88,36 @@ class EventListenerWrapper : public EventListener, public luabind::wrap_base
 		{
 			return ptr->EventListener::keyReleaseEvent(event);
 		}
+
+		virtual void mouseMoveEvent(MouseEvent* event)
+		{
+			call<void>("mouseMoveEvent", event);
+		}
+
+		static void defaultMouseMoveEvent(EventListener* ptr, MouseEvent* event)
+		{
+			return ptr->EventListener::mouseMoveEvent(event);
+		}
+
+		virtual void mouseReleaseEvent(MouseEvent* event)
+		{
+			call<void>("mouseReleaseEvent", event);
+		}
+
+		static void defaultMouseReleaseEvent(EventListener* ptr, MouseEvent* event)
+		{
+			return ptr->EventListener::mouseReleaseEvent(event);
+		}
+
+		virtual void mousePressEvent(MouseEvent* event)
+		{
+			call<void>("mousePressEvent", event);
+		}
+
+		static void defaultMousePressEvent(EventListener* ptr, MouseEvent* event)
+		{
+			return ptr->EventListener::mousePressEvent(event);
+		}
 };
 
 ScriptEngine::ScriptEngine()
@@ -192,10 +222,23 @@ ScriptEngine::ScriptEngine()
 
 	module(L)
 	[
+		class_<MouseEvent>("MouseEvent")
+			.def(constructor<int, int, int>())
+			.def("x", &MouseEvent::x)
+			.def("y", &MouseEvent::y)
+			.def("button", &MouseEvent::button)
+			// .def("pos", &MouseEvent::pos)
+	];
+
+	module(L)
+	[
 		class_<EventListener, EventListenerWrapper>("EventListener")
 			.def(constructor<>())
 			.def("keyPressEvent", (void (EventListener::*)(KeyEvent *)) &EventListener::keyPressEvent, &EventListenerWrapper::defaultKeyPressEvent)
 			.def("keyReleaseEvent", (void (EventListener::*)(KeyEvent *)) &EventListener::keyReleaseEvent, &EventListenerWrapper::defaultKeyReleaseEvent)
+			.def("mouseMoveEvent", (void (EventListener::*)(KeyEvent *)) &EventListener::mouseMoveEvent, &EventListenerWrapper::defaultMouseMoveEvent)
+			.def("mouseReleaseEvent", (void (EventListener::*)(KeyEvent *)) &EventListener::mouseReleaseEvent, &EventListenerWrapper::defaultMouseReleaseEvent)
+			.def("mousePressEvent", (void (EventListener::*)(KeyEvent *)) &EventListener::mousePressEvent, &EventListenerWrapper::defaultMousePressEvent)
 	];
 }
 

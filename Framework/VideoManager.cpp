@@ -68,77 +68,37 @@ void VideoManager::init(Size const& size, uint bpp, String const& caption, bool 
 {
 	SDL_WM_SetCaption(caption.c_str(), NULL);
 
-	const SDL_VideoInfo* videoInfo = SDL_GetVideoInfo();
+	Uint32 flags = SDL_HWSURFACE | SDL_OPENGL;
 
-	uint flags = videoInfo->hw_available ? SDL_HWSURFACE : SDL_SWSURFACE;
+	fullscreen ? flags |= SDL_FULLSCREEN : putenv((char *) "SDL_VIDEO_CENTERED=1");
 
-	if ((flags & SDL_HWSURFACE) == SDL_HWSURFACE)
-	{
-		if (videoInfo->video_mem * 1024 > (size.width() * size.height() * bpp / 8))
-		{
-			flags |= (SDL_DOUBLEBUF | SDL_HWACCEL);
-		}
-
-		else {
-			flags &= ~SDL_HWSURFACE;
-		}
-	}
-
-	if (fullscreen)
-	{
-		flags |= SDL_FULLSCREEN;
-	}
-
-	else {
-		putenv((char *)"SDL_VIDEO_CENTERED=1");
-	}
-
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-	switch (bpp)
-	{
-		case 32:
-		case 24:
-			SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-			SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-			SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-			SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-			SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-			SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-			break;
-
-		case 16:
-			SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-			SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
-			SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
-			SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-			SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-			break;
-
-		default:
-			break;
-	}
-
-	if (FAILED(SDL_SetVideoMode(size.width(), size.height(), bpp, flags | SDL_OPENGL)))
+	if (FAILED(SDL_SetVideoMode(size.width(), size.height(), bpp, flags)))
 	{
 		throw Exception("SDL_SetVideoMode: %s", SDL_GetError());
 	}
 
-	else
-	{
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, bpp);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE, 0);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE, 0);
 
-		glEnable(GL_TEXTURE_2D);
-		glDisable(GL_DEPTH_TEST);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-		glViewport(0, 0, size.width(), size.height());
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
+	glViewport(0, 0, size.width(), size.height());
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 
-		glOrtho(0.0f, size.width(), size.height(), 0.0f, -1.0f, 1.0f);
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-	}
+	glOrtho(.0f, size.width(), size.height(), .0f, -1.0f, 1.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glClearColor(.0f, .0f, .0f, .0f);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDisable(GL_DEPTH_TEST);
 }
 
 void VideoManager::beginDraw()
