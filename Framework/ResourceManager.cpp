@@ -107,6 +107,8 @@ void ResourceManager::flush()
 
 void ResourceManager::asyncLoad(const ResourceGroup& resources, boost::function<void (const String& filename)> fun)
 {
+	UNUSED(resources)
+	UNUSED(fun)
 }
 
 WINTERMOON_END_NAMESPACE

@@ -48,6 +48,8 @@ WINTERMOON_BEGIN_NAMESPACE
 
 Font::Font(const String& filename, const String& glyphs)
 {
+	UNUSED(filename)
+	UNUSED(glyphs)
 }
 
 Font::~Font()

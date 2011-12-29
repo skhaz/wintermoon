@@ -76,13 +76,13 @@
 #endif
 #define FAILED(x) (!(x))
 
-#define UNUSED(x) ((void)(x))
+#define UNUSED(x) ((void)(x));
 
 #define LOG(...) Logger::instance()->put(__VA_ARGS__);
 
 #define THROW_IF(condition, ...) if ((condition)) do { throw Exception(__VA_ARGS__); } while (0);
 
-#define TR(string) StringTable::instance()->getString(string)
+#define i18n(string) StringTable::instance()->getString(string)
 
 
 

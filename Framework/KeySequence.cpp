@@ -46,47 +46,47 @@
 WINTERMOON_BEGIN_NAMESPACE
 
 KeySequence::KeySequence()
-: m_key1(Key())
+: m_tolerance(0)
+, m_key1(Key())
 , m_key2(Key())
 , m_key3(Key())
 , m_key4(Key())
-, m_tolerance(0)
 {
 }
 
 KeySequence::KeySequence(const Key& key)
-: m_key1(key)
+: m_tolerance(0)
+, m_key1(key)
 , m_key2(Key())
 , m_key3(Key())
 , m_key4(Key())
-, m_tolerance(0)
 {
 }
 
 KeySequence::KeySequence(const Key& key1, const Key& key2, int tolerance)
-: m_key1(key1)
+: m_tolerance(tolerance)
+, m_key1(key1)
 , m_key2(key2)
 , m_key3(Key())
 , m_key4(Key())
-, m_tolerance(tolerance)
 {
 }
 
 KeySequence::KeySequence(const Key& key1, const Key& key2, const Key& key3, int tolerance)
-: m_key1(key1)
+: m_tolerance(tolerance)
+, m_key1(key1)
 , m_key2(key2)
 , m_key3(key3)
 , m_key4(Key())
-, m_tolerance(tolerance)
 {
 }
 
 KeySequence::KeySequence(const Key& key1, const Key& key2, const Key& key3, const Key& key4, int tolerance)
-: m_key1(key1)
+: m_tolerance(tolerance)
+, m_key1(key1)
 , m_key2(key2)
 , m_key3(key3)
 , m_key4(key4)
-, m_tolerance(tolerance)
 {
 }
 
@@ -96,6 +96,7 @@ KeySequence::~KeySequence()
 
 void KeySequence::keyPressEvent(KeyEvent* event)
 {
+	UNUSED(event)
 }
 
 WINTERMOON_END_NAMESPACE

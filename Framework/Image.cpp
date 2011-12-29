@@ -85,25 +85,29 @@ Image::~Image()
 
 void Image::draw(float x, float y, float rotation) const
 {
+	const int width = m_pixmap->width();
+	const int height = m_pixmap->height();
+
+	const GLfloat vertices[] = {
+		x, y + height,
+		x + width, y + height,
+		x, y,
+		x + width, y
+	};
+
+	static const GLfloat texCoords[] = {
+		0, 1,
+		1, 1,
+		0, 0,
+		1, 0,
+ 	};
+
 	m_pixmap->bind();
-	glLoadIdentity();
 
-	glTranslatef(x, y, 0.0f);
 	glRotatef(rotation, 0.0f, 0.0f, 1.0f);
-
-	glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(0.0f, 0.0f);
-
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex2f(m_pixmap->width(), 0.0f);
-
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex2f(m_pixmap->width(), m_pixmap->height());
-
-		glTexCoord2f(0.0f, 1.0f);
-		glVertex2f(0.0f, m_pixmap->height());
-	glEnd();
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
+	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 uint Image::width() const

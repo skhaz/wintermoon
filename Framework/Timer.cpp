@@ -68,6 +68,8 @@ void Timer::setInterval(Uint32 interval)
 
 Uint32 Timer::entryPoint(Uint32 interval, void* param)
 {
+	UNUSED(interval)
+
 	Timer* ptr = static_cast<Timer *>(param);
 	ptr->timerEvent();
 

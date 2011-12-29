@@ -61,27 +61,27 @@ EventListener::~EventListener()
 
 void EventListener::keyPressEvent(KeyEvent* event)
 {
-	UNUSED(event);
+	UNUSED(event)
 }
 
 void EventListener::keyReleaseEvent(KeyEvent* event)
 {
-	UNUSED(event);
+	UNUSED(event)
 }
 
 void EventListener::mouseMoveEvent(MouseEvent* event)
 {
-	UNUSED(event);
+	UNUSED(event)
 }
 
 void EventListener::mouseReleaseEvent(MouseEvent* event)
 {
-	UNUSED(event);
+	UNUSED(event)
 }
 
 void EventListener::mousePressEvent(MouseEvent* event)
 {
-	UNUSED(event);
+	UNUSED(event)
 }
 
 void EventListener::quitEvent()

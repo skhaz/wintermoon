@@ -55,23 +55,23 @@ static size_t ovPHYSFS_read(void* ptr, size_t size, size_t nmemb, void* datasour
 
 static int ovPHYSFS_seek(void* datasource, ogg_int64_t offset, int whence)
 {
-	UNUSED(datasource);
-	UNUSED(offset);
-	UNUSED(whence);
+	UNUSED(datasource)
+	UNUSED(offset)
+	UNUSED(whence)
 
 	return -1;
 }
 
 static int ovPHYSFS_close(void* datasource)
 {
-	UNUSED(datasource);
+	UNUSED(datasource)
 
 	return 0;
 }
 
 static long ovPHYSFS_tell(void* datasource)
 {
-	UNUSED(datasource);
+	UNUSED(datasource)
 
 	return -1;
 }

@@ -65,7 +65,7 @@ PixmapRef Pixmap::get(const String& filename)
 
 Pixmap::Pixmap(SDL_Surface* surface)
 {
-	// TODO
+	UNUSED(surface)
 }
 
 Pixmap::Pixmap(const String& filename)

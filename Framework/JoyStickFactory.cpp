@@ -52,6 +52,9 @@ WINTERMOON_BEGIN_NAMESPACE
 
 JoyStick* JoyStickFactory::createJoystick(int index)
 {
+	UNUSED(index)
+
+	return NULL; // TODO
 }
 
 WINTERMOON_END_NAMESPACE

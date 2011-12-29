@@ -1,5 +1,4 @@
 
-
 /*
  *                        __                                                    
  *             __        /\ \__                                                 
@@ -43,74 +42,79 @@
 #ifndef _Allocator_h
 #define _Allocator_h
 
-#ifdef new
-# undef new
-#endif
-#ifdef delete
-# undef delete
-#endif
+#include <limits>
+#include <memory>
+
+#include "../3rdparty/nedmalloc/nedmalloc.h"
 
 
 
 WINTERMOON_BEGIN_NAMESPACE
 
-template <Alloc>
-class DLL_EXPORT Allocator
+template <class T>
+class nedallocator
 {
 	public:
-		Allocator()
+		typedef T					value_type;
+		typedef value_type*			pointer;
+		typedef value_type&			reference;
+		typedef const value_type*	const_pointer;
+		typedef const value_type&	const_reference;
+		typedef size_t				size_type;
+		typedef ptrdiff_t			difference_type;
+
+		template <class U>
+		struct rebind { typedef nedallocator<U> other; };
+
+		nedallocator() throw()
+		{ }
+
+		nedallocator(const std::allocator<T>&)
+		{ }
+
+		pointer address(reference x) const
 		{
+			return &x;
 		}
 
-		virtual ~Allocator()
+		const_pointer address(const_reference x) const
 		{
+			return &x;
 		}
 
-		void* operator new(size_t size, const char* file, int line, const char* func)
+		pointer allocate(size_type n, const_pointer hint=0)
 		{
-			return Alloc::allocate(size, file, line, func);
+			return reinterpret_cast<pointer>(nedalloc::nedmalloc(sizeof(T) * n));
 		}
 
-		void* operator new(size_t size)
+		void deallocate(pointer p, size_type n)
 		{
-			return Alloc::allocate(size);
+			nedalloc::nedfree(p);
 		}
 
-		void* operator new(size_t size, void* ptr)
+		size_type max_size() const throw()
 		{
-			return ptr;
+			return std::numeric_limits<size_t>::max() / sizeof(T);
 		}
 
-		void* operator new[](size_t size, const char* file, int line, const char* func)
+		void construct(pointer p, const_reference val)
 		{
-			return Alloc::allocate(size, file, line, func);
+			new ((void*)p) T(val);
 		}
 
-		void* operator new[](size_t size)
+		void destroy(pointer p)
 		{
-			return Alloc::allocate(size);
+			((T*)p)->~T();
 		}
 
-		void operator delete(void* ptr)
-		{
-			Alloc::deallocate(ptr);
-		}
+		template <class U>
+		nedallocator(const nedallocator<U>&) {}
 
-		void operator delete(void* pre, const char*, int, const char*)
-		{
-			Alloc::deallocate(ptr);
-		}
-
-		void operator delete[](void* ptr)
-		{
-			Alloc::deallocate(ptr);
-		}
-	
-		void operator delete[](void* ptr, const char*, int, const char*)
-		{
-			Alloc::deallocate(ptr);
-		}
+		template <class U>
+		nedallocator& operator=(const nedallocator<U>&) { return *this; }
 };
 
 WINTERMOON_END_NAMESPACE
+
+#endif
 
