@@ -82,7 +82,7 @@ bool Rect::collide(const Rect& other) const
 
 int Rect::distance(const Rect& other) const
 {
-	return static_cast<int>(std::sqrt(static_cast<double>(((x-other.x)*(x-other.x) + (y-other.y)*(y-other.y))) + 0.5f));
+	return static_cast<int>(std::sqrt(static_cast<double>(((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y))) + 0.5f));
 }
 
 WINTERMOON_END_NAMESPACE

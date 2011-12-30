@@ -51,8 +51,7 @@ WINTERMOON_BEGIN_NAMESPACE
 template <typename T>
 inline void SafeDelete(T* ptr)
 {
-	if (ptr)
-	{
+	if (ptr) {
 		delete ptr;
 		ptr = 0;
 	}
@@ -61,25 +60,21 @@ inline void SafeDelete(T* ptr)
 template <>
 inline void SafeDelete<SDL_Surface>(SDL_Surface* surface)
 {
-	if (surface)
-	{
+	if (surface) {
 		SDL_FreeSurface(surface);
 		surface = 0;
 	}
 }
 
 #ifdef HAVE_SDLTTF
-
 template <>
 inline void SafeDelete<TTF_Font>(TTF_Font* font)
 {
-	if (font)
-	{
+	if (font) {
 		TTF_CloseFont(font);
 		font = 0;
 	}
 }
-
 #endif
 
 WINTERMOON_END_NAMESPACE

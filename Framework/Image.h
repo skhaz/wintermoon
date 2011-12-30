@@ -62,7 +62,7 @@ class Image
 
 		virtual ~Image();
 
-		void draw(float x, float y, float rotation = .0f) const;
+		void draw(float x, float y) const;
 
 		uint width() const;
 

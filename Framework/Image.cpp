@@ -83,7 +83,7 @@ Image::~Image()
 {
 }
 
-void Image::draw(float x, float y, float rotation) const
+void Image::draw(float x, float y) const
 {
 	const int width = m_pixmap->width();
 	const int height = m_pixmap->height();
@@ -104,7 +104,6 @@ void Image::draw(float x, float y, float rotation) const
 
 	m_pixmap->bind();
 
-	glRotatef(rotation, 0.0f, 0.0f, 1.0f);
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
