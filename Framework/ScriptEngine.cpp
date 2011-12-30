@@ -247,7 +247,7 @@ ScriptEngine::~ScriptEngine()
 	// lua_close(L); XXX
 }
 
-void ScriptEngine::evaluate(const std::string& program)
+void ScriptEngine::evaluate(const String& program)
 {
 	const char* buffer = program.c_str();
 

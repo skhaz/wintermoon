@@ -46,12 +46,14 @@
 WINTERMOON_BEGIN_NAMESPACE
 
 Thread::Thread()
+: m_thread(0)
 {
 }
 
 Thread::~Thread()
 {
-	SDL_KillThread(m_thread);
+	if (m_thread)
+		SDL_KillThread(m_thread);
 }
 
 void Thread::start()

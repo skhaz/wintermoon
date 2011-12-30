@@ -52,7 +52,7 @@
 WINTERMOON_BEGIN_NAMESPACE
 
 template <class T>
-class nedallocator
+class Allocator
 {
 	public:
 		typedef T					value_type;

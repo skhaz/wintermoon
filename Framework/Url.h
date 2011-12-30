@@ -53,11 +53,11 @@ class DLL_EXPORT Url
 	public:
 		Url();
 
-		Url(String const& url);
+		Url(const String& url);
 
 		virtual ~Url();
 
-		void setUrl(String const& url);
+		void setUrl(const String& url);
 
 		String path() const;
 

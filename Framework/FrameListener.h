@@ -46,18 +46,17 @@
 
 
 
-namespace Wintermoon
+WINTERMOON_BEGIN_NAMESPACE
+
+class DLL_EXPORT FrameListener
 {
-	class DLL_EXPORT FrameListener
-	{
-		public:
-			virtual ~FrameListener() { }
+    public:
+        virtual ~FrameListener() { }
+        virtual bool frameStarted() = 0;
+        virtual bool frameEnded() = 0;
+};
 
-			virtual bool frameStarted() = 0;
-
-			virtual bool frameEnded() = 0;
-	};
-}
+WINTERMOON_END_NAMESPACE
 
 #endif
 

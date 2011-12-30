@@ -65,7 +65,6 @@ WINTERMOON_BEGIN_NAMESPACE
 
 typedef Uint32 uint;
 typedef Uint8 uint8;
-
 typedef std::string String;
 
 WINTERMOON_END_NAMESPACE

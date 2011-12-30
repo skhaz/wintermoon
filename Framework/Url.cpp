@@ -52,7 +52,7 @@ Url::Url()
 {
 }
 
-Url::Url(String const& url)
+Url::Url(const String& url)
 {
 	setUrl(url);
 }
@@ -61,7 +61,7 @@ Url::~Url()
 {
 }
 
-void Url::setUrl(String const& url)
+void Url::setUrl(const String& url)
 {
 	using namespace boost::xpressive;
 
@@ -70,17 +70,12 @@ void Url::setUrl(String const& url)
 	if (found != String::npos)
 	{
 		m_filename = url.substr(0, found);
-
 		String query = url.substr(found + 1, url.size());
-
 		sregex pair = ((s1 = +_w) >> "=" >> (s2 = +(set[alnum | '_' | '.' | ','])))
-
 		[ref(m_parameters)[s1] = s2];
-
 		sregex rx = pair >> *('&' >> *(pair));
 
-		if (regex_match(query, rx))
-		{
+		if (regex_match(query, rx)) {
 		}
 	}
 
@@ -88,8 +83,7 @@ void Url::setUrl(String const& url)
 		m_filename = url;
 	}
 
-	if (std::string::npos != (found = m_filename.find_last_of(".")))
-	{
+	if (String::npos != (found = m_filename.find_last_of("."))) {
 		m_extension = m_filename.substr(found + 1, m_filename.size());
 	}
 }
