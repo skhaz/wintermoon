@@ -45,6 +45,7 @@
 #include "Internal.h"
 
 
+
 WINTERMOON_BEGIN_NAMESPACE
 #ifdef Assert
 # undef Assert

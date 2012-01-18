@@ -47,8 +47,6 @@
 
 WINTERMOON_BEGIN_NAMESPACE
 
-uint Pixmap::m_last_bind = 0;
-
 PixmapRef Pixmap::get(const String& filename)
 {
 	PixmapCache cache;

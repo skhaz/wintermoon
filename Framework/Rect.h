@@ -44,7 +44,7 @@
 
 #include "Internal.h"
 
-#include "SDL.h"
+#include <SDL/SDL.h>
 
 
 

@@ -49,7 +49,7 @@
 #include "List.h"
 #include "Map.h"
 
-#include "SDL_types.h"
+#include <SDL/SDL_types.h>
 
 #include <string>
 

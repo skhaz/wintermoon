@@ -70,8 +70,6 @@ class DLL_EXPORT Pixmap
 		uint m_id;
 		uint m_width;
 		uint m_height;
-
-		static uint m_last_bind;
 };
 
 WINTERMOON_END_NAMESPACE
