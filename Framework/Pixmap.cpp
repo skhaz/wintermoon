@@ -1,4 +1,3 @@
-
 /*
  *                        __                                                    
  *             __        /\ \__                                                 
@@ -104,8 +103,8 @@ Pixmap::Pixmap(const String& filename)
 
 	glGenTextures(1, &m_id);
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	// glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glTexImage2D(GL_TEXTURE_2D, 0, bpp, surface->w, surface->h, 0, format, GL_UNSIGNED_BYTE, surface->pixels);
 
